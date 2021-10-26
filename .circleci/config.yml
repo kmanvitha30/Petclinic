@@ -23,7 +23,7 @@ jobs:
   deploy:
     docker:
       - image: jshimko/kube-tools-aws
-    working_directory:  ~/petclinic-angular/helm-angular
+    working_directory:  ~/petclinic-angular
     steps:
       - attach_workspace:
           at: ~/petclinic-angular
