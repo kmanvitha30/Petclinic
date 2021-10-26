@@ -19,11 +19,11 @@ jobs:
       - persist_to_workspace:
           root: ~/petclinic-angular
           paths:
-            - helm    
+            - helm-angular    
   deploy:
     docker:
       - image: jshimko/kube-tools-aws
-    working_directory:  ~/petclinic-angular/helm
+    working_directory:  ~/petclinic-angular/helm-angular
     steps:
       - attach_workspace:
           at: ~/petclinic-angular
@@ -37,7 +37,7 @@ jobs:
           name: Deploy into eks
           command: |
             sed -i -e "s/latest/${CIRCLECI_SHA}/g" values.yaml 
-            helm install petclinic-angular petclinic-angular
+            helm install helm-angular petclinic-angular
            
 workflows:
   mvn & docker build:
