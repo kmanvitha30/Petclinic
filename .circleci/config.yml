@@ -11,7 +11,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: false
       - run:
-          name: Build and push docker image
+          name: Build & push docker image
           command: |
             docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
             docker build -t ${DOCKER_USERNAME}/petclinic-angular:${CIRCLECI_SHA} .
