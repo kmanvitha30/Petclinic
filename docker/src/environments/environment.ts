@@ -23,6 +23,6 @@
 
 export const environment = {
   production: false,
-  REST_API_URL: 'http://4eb3ca543f8f4c1e8fa12a3bfa7bb02-1582334629.us-east-1.elb.amazonaws.com:9966/petclinic/api/'
+  REST_API_URL: 'http://a4eb3ca543f8f4c1e8fa12a3bfa7bb02-1582334629.us-east-1.elb.amazonaws.com:9966/petclinic/api/'
 };
 
