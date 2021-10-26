@@ -39,7 +39,7 @@ jobs:
 workflows:
   build and deploy:
     jobs:
-      - docker-build-push:
+      - docker-build-push
       - deploy:
           requires:
             - docker-build-push
