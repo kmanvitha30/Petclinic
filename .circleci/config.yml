@@ -37,12 +37,9 @@ jobs:
             helm install petclinic-angular helm-petclinic_angular
            
 workflows:
-  mvn & docker build:
+  build and deploy:
     jobs:
-      - mvn-build
       - docker-build-push:
-          requires:
-            - mvn-build
       - deploy:
           requires:
             - docker-build-push
