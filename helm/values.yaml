@@ -1,0 +1,11 @@
+replicaCount: 1
+
+image:
+  repository: manvitha9630/petclinic-angular
+  tag: "latest"
+
+service:
+  type: LoadBalancer
+  containerport: 8080
+  port: 8080
+

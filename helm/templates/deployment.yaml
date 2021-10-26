@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "petclinic-angular.fullname" . }}
+  labels: 
+    app: {{ include "petclinic-angular.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "petclinic-angular.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "petclinic-angular.fullname" . }}
+    spec:
+      containers:        
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.service.containerport }}
