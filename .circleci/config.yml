@@ -1,0 +1,51 @@
+version: 2.1
+
+jobs:
+  docker-build-push:
+    docker:
+      - image: docker:17.05.0-ce-git
+    working_directory: ~/petclinic-angular/docker
+    steps:
+      - checkout:
+          path: ~/petclinic-angular
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run:
+          name: Build and push docker image
+          command: |
+            docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+            docker build -t ${DOCKER_USERNAME}/petclinic-angular:${CIRCLECI_SHA} .
+            docker push ${DOCKER_USERNAME}/petclinic-angular:${CIRCLECI_SHA}
+      - persist_to_workspace:
+          root: ~/petclinic-angular
+          paths:
+            - helm    
+  deploy:
+    docker:
+      - image: jshimko/kube-tools-aws
+    working_directory:  ~/petclinic-angular/helm
+    steps:
+      - attach_workspace:
+          at: ~/petclinic-angular
+      - run:
+          name: Import kubeconfig
+          command: |
+            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}
+      - run:
+          name: Deploy into eks
+          command: |
+            sed -i -e "s/latest/${CIRCLECI_SHA}/g" values.yaml 
+            helm install petclinic-angular petclinic-angular
+           
+workflows:
+  mvn & docker build:
+    jobs:
+      - mvn-build
+      - docker-build-push:
+          requires:
+            - mvn-build
+      - deploy:
+          requires:
+            - docker-build-push
