@@ -1,6 +1,7 @@
 The automation is used to deploy spring petclinic angular application into AWS cloud.
 
 To spin up the required infrastructure in AWS cloud refer https://github.com/kmanvitha30/terraform-petclinic
+
 To deploy the backend spring petclinic rest application refer https://github.com/kmanvitha30/petclinic-rest
 
 ## Pre-Requisities:
@@ -11,7 +12,7 @@ sudo yum install git -y
 git --version
 
 #angular-cli
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
 sudo yum install nodejs -y
 sudo npm install -g @angular/cli@latest 
 
